@@ -1,7 +1,28 @@
 import React from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from "flowbite-react";
+import axios from 'axios';
 
-function EnquiryList({data}) {
+function EnquiryList({data , getEnquiry , Swal}) {
+const deleteRow = (Id) =>{
+  Swal.fire({
+    title: "Do you want to save the changes?",
+    showDenyButton: true,
+  showCancelButton: true,
+  confirmButtonText: "Save",
+  denyButtonText: `Don't save`
+}).then((result) => {
+  /* Read more about isConfirmed, isDenied below */
+  if (result.isConfirmed) {
+    axios.delete(`http://localhost:8500/api/website/enquiry/delete/${Id}`).then((res)=>{
+      console.log(res);
+    })
+    Swal.fire("Saved!", "", "success");
+  }
+  
+  else if (result.isDenied) Swal.fire("Changes are not saved", "", "info");
+});
+}
+
   return (
     <>
     <div className='bg-slate-500 rounded'>
@@ -26,7 +47,7 @@ function EnquiryList({data}) {
                     {data.map((items , index)=>{
             return(
               <>
-     <TableRow className="bg-white dark:border-gray-700 dark:bg-gray-800">
+           <TableRow className="bg-white dark:border-gray-700 dark:bg-gray-800">
             <TableCell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
             {index + 1}
             </TableCell>
@@ -38,7 +59,9 @@ function EnquiryList({data}) {
              Edit
             </TableCell>
             <TableCell>
-             Delete
+            <a href="#" onClick={()=>deleteRow(items._id)} className="font-medium text-primary-600 hover:underline dark:text-primary-500">
+                Delete
+              </a>
             </TableCell>
           </TableRow>
               </>
@@ -51,10 +74,8 @@ function EnquiryList({data}) {
               <h2>not Data Found</h2>
             </TableCell>
           </TableRow>
-          </>}
-
-     
-        
+          </>
+          }
         </TableBody>
       </Table>
     </div>

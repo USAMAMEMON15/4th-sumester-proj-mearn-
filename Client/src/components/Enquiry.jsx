@@ -3,6 +3,7 @@ import { Button, Checkbox, Label, TextInput ,Textarea  } from "flowbite-react";
 import EnquiryList from './EnquiryList';
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify'; 
+import Swal from 'sweetalert2'
 
 function Enquiry() {
   let [enquiry , setEnquiry] = useState([])
@@ -76,7 +77,7 @@ let [formData , setFormData] = useState({
                      '>Register new account</Button>
             </form>
         </div>
-    <EnquiryList data={enquiry}/>
+    <EnquiryList data={enquiry} getEnquiry={getEnquiry} Swal={Swal}/>
     </div>
   </>
   )

@@ -27,7 +27,7 @@ const enquiryList =async (req,resp)=>{
 }
 
 //Delete
-const DeleteEnquiry = async(req,resp)=>{
+const deleteEnquiry = async(req,resp)=>{
     let enquiryId = req.params.id;
     let enquiry = await enquiryModel.DeleteEnquiry({_id : enquiryId});
     resp.send({
@@ -65,4 +65,4 @@ const UpdateEnquiry = async(req,resp)=>{
 }
 
 
-module.exports = {insertEnquiry , enquiryList ,DeleteEnquiry,SingleEnquiry , UpdateEnquiry}
+module.exports = {insertEnquiry , enquiryList , deleteEnquiry ,SingleEnquiry , UpdateEnquiry}

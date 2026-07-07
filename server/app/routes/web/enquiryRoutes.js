@@ -1,5 +1,5 @@
 const express = require("express");
-const { insertEnquiry, enquiryList, DeleteEnquiry, SingleEnquiry, UpdateEnquiry } = require("../../controllers/web/enquiryController");
+const { insertEnquiry, enquiryList, SingleEnquiry, UpdateEnquiry, deleteEnquiry } = require("../../controllers/web/enquiryController");
 
 const enquiryRouter = express.Router();
 
@@ -10,7 +10,7 @@ enquiryRouter.post("/insert" , insertEnquiry)
 enquiryRouter.get("/" , enquiryList)
 
 //Delete
-enquiryRouter.delete("delete/:id" , DeleteEnquiry)
+enquiryRouter.delete("/delete/:id" , deleteEnquiry)
 
 //single
 enquiryRouter.get("/single/:id" , SingleEnquiry)
