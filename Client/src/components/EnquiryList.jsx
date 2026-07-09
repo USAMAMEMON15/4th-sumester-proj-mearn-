@@ -2,19 +2,20 @@ import React from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from "flowbite-react";
 import axios from 'axios';
 
-function EnquiryList({data , getEnquiry , Swal}) {
+function EnquiryList({data , getEnquiry , Swal ,setFormData}) {
 const deleteRow = (Id) =>{
   Swal.fire({
     title: "Do you want to save the changes?",
     showDenyButton: true,
   showCancelButton: true,
   confirmButtonText: "Save",
-  denyButtonText: `Don't save`
+  denyButtonText: `Don't save` 
 }).then((result) => {
   /* Read more about isConfirmed, isDenied below */
   if (result.isConfirmed) {
     axios.delete(`http://localhost:8500/api/website/enquiry/delete/${Id}`).then((res)=>{
       console.log(res);
+      getEnquiry();
     })
     Swal.fire("Saved!", "", "success");
   }
@@ -23,6 +24,15 @@ const deleteRow = (Id) =>{
 });
 }
 
+const editRow = (Id) =>{{
+  axios.get(`http://localhost:8500/api/website/enquiry/single/${Id}`).then((res)=>{
+    let data = res.data
+    return data
+  }).then((data)=>{
+    console.log(data);
+  setFormData(data.message)
+  })
+}}
   return (
     <>
     <div className='bg-slate-500 rounded'>
@@ -56,7 +66,9 @@ const deleteRow = (Id) =>{
             <TableCell>{items.number}</TableCell>
             <TableCell>{items.message}</TableCell>
             <TableCell>
-             Edit
+                <a href="#" onClick={()=>editRow(items._id)} className="font-medium text-primary-600 hover:underline dark:text-primary-500">
+                Edit
+              </a>
             </TableCell>
             <TableCell>
             <a href="#" onClick={()=>deleteRow(items._id)} className="font-medium text-primary-600 hover:underline dark:text-primary-500">
@@ -83,5 +95,6 @@ const deleteRow = (Id) =>{
     </>
   )
 }
+
 
 export default EnquiryList

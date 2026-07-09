@@ -11,12 +11,27 @@ let [formData , setFormData] = useState({
   "name" : "",
   "email" : "",
   "number" : "",
-  "message" : ""
+  "message" : "",
+  _id : "",
 })
 
     const saveEnquiry =(e)=>{
         e.preventDefault()
-        
+   if(formData._id){
+   axios.put(`http://localhost:8500/api/website/enquiry/update/${formData._id}` , formData).then((res)=>{
+    console.log(res);
+    getEnquiry();
+    toast.success("Enquiry has been updated!");
+})
+setFormData({
+  "name" : "",
+  "email" : "",
+  "number" : "",
+  "message" : "",
+})
+}
+
+   else{
         axios.post(`http://localhost:8500/api/website/enquiry/insert` , formData).then((res)=>{
           toast.success("Enquiry has been inserted!");  
           console.log(res.data);
@@ -29,6 +44,8 @@ let [formData , setFormData] = useState({
           "message" : "",
         })
     }
+   }     
+
     //Get Enquiry
     const getEnquiry = () =>{
       axios.get(`http://localhost:8500/api/website/enquiry/`).then((res)=>{
@@ -74,10 +91,10 @@ let [formData , setFormData] = useState({
                         <Textarea value={formData.message} onChange={getVal} name='message' placeholder="Leave a comment..." required rows={4} />
                       </div>
                      <Button type="submit" className='w-[100%]
-                     '>Register new account</Button>
+                     '>{formData._id ? "update" : "Register new account"}</Button>
             </form>
         </div>
-    <EnquiryList data={enquiry} getEnquiry={getEnquiry} Swal={Swal}/>
+    <EnquiryList data={enquiry} getEnquiry={getEnquiry} Swal={Swal} setFormData={setFormData}/>
     </div>
   </>
   )

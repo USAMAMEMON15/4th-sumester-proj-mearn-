@@ -29,7 +29,7 @@ const enquiryList =async (req,resp)=>{
 //Delete
 const deleteEnquiry = async(req,resp)=>{
     let enquiryId = req.params.id;
-    let enquiry = await enquiryModel.DeleteEnquiry({_id : enquiryId});
+    let enquiry = await enquiryModel.deleteOne({_id : enquiryId});
     resp.send({
         status : 1,
         message : "Enquiry has been deleted:"

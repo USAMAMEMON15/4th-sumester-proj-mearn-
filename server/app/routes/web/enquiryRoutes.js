@@ -16,6 +16,6 @@ enquiryRouter.delete("/delete/:id" , deleteEnquiry)
 enquiryRouter.get("/single/:id" , SingleEnquiry)
 
 //update
-enquiryRouter.put("update/:id" , UpdateEnquiry)
+enquiryRouter.put("/update/:id" , UpdateEnquiry)
 
 module.exports = enquiryRouter;
